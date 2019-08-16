@@ -10,7 +10,7 @@ import Journey from "./Journey/Journey";
 import Submit from "./Submit/Submit";
 import CitySelector from "../components/CitySelector";
 
-import { exchangeFromTo, showCitySelector, hideCitySelector } from "./actions";
+import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData, setSelectedCity } from "./actions";
 
 const App = function(props) {
 	const { from, to, dispatch, isCitySelectorVisible, cityData, isLoadingCityData } = props;
@@ -35,16 +35,18 @@ const App = function(props) {
 			},
 			dispatch
 		);
-	});
+	}, [dispatch]);
 
 	const citySelectorCbs = useMemo(() => {
 		return bindActionCreators(
 			{
 				onBack: hideCitySelector,
+				fetchCityData,
+				onSelect: setSelectedCity,
 			},
 			dispatch
 		);
-	});
+	}, [dispatch]);
 	return (
 		<div>
 			<div className="header-wrapper">
