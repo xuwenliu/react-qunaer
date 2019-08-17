@@ -66,3 +66,15 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+
+
+### 启动步骤
+```js
+    cd train-mock
+    npm install
+    node index.js
+    cd ..   // react-qunaer
+    yarn start
+```

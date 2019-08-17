@@ -72,7 +72,7 @@ const CitySelector = memo(function CitySelector(props) {
 	}, [show, cityData, isLoading, fetchCityData]);
 
 	const toAlpha = useCallback(alpha => {
-		document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
+        document.querySelector(`[data-cate='${alpha}']`).scrollIntoView({ behavior: 'smooth', block: "start" });
     }, []);
     
 
