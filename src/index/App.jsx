@@ -11,11 +11,11 @@ import Submit from "./Submit/Submit";
 import CitySelector from "../components/CitySelector";
 import DateSelector from "../components/DateSelector";
 
-import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData, setSelectedCity,showDateSelector,hideDateSelector,setDepartDate } from "./actions";
+import { exchangeFromTo, showCitySelector, hideCitySelector, fetchCityData, setSelectedCity,showDateSelector,hideDateSelector,setDepartDate,toggleHighSpeed} from "./actions";
 import { h0 } from "../lib";
 
 const App = function(props) {
-    const { from, to, dispatch, isCitySelectorVisible,isDateSelectorVisible, cityData, isLoadingCityData, departDate } = props;
+    const { from, to, dispatch, isCitySelectorVisible,isDateSelectorVisible, cityData, isLoadingCityData, departDate,highSpeed } = props;
     
 
 	const onBack = useCallback(() => {
@@ -70,20 +70,27 @@ const App = function(props) {
         dispatch(setDepartDate(day));
         dispatch(hideDateSelector());
     }, [dispatch])
+
+    const hightSpeedCbs = useMemo(() => {
+        return bindActionCreators({
+            toggle: toggleHighSpeed
+        },dispatch)
+    },[dispatch])
     
 	return (
 		<div>
 			<div className="header-wrapper">
 				<Header title="火车票" onBack={onBack} />
 			</div>
-			<form className="form">
+			<form action="/query.html" className="form">
 				<Journey from={from} to={to} {...cbs} />
                 <DepartDate time={departDate} {...departDateCbs}/>
-				<HighSpeed />
+                <HighSpeed highSpeed={highSpeed} {...hightSpeedCbs} />
+                <CitySelector show={isCitySelectorVisible} cityData={cityData} isLoading={isLoadingCityData} {...citySelectorCbs} />
+                <DateSelector show={isDateSelectorVisible} {...dateSelectorCbs} onSelect={onSelectDate}/>
+                <Submit />
 			</form>
-			<CitySelector show={isCitySelectorVisible} cityData={cityData} isLoading={isLoadingCityData} {...citySelectorCbs} />
-            <DateSelector show={isDateSelectorVisible} {...dateSelectorCbs} onSelect={onSelectDate}/>
-			<Submit />
+			
 		</div>
 	);
 };
